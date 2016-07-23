@@ -114,7 +114,6 @@
           }
         ],
         "postCommit": {
-           "script": "./manage.py test"
         }
       }
     },
