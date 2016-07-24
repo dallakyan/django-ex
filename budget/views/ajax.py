@@ -74,7 +74,7 @@ def add_transaction(request):
         for instance in instances:
             total += instance.amount
     if total != transaction.amount:
-        print "Amounts didn't add up:", total, transaction.amount
+        print("Amounts didn't add up:", total, transaction.amount)
         raise ValueError()
     transaction.save()
     for instance in instances:
