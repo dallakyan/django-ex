@@ -15,9 +15,5 @@ simplejson==3.8.2
 six==1.10.0
 stevedore==1.10.0
 textblob==0.11.1
-textstat==0.2
-virtualenv==13.1.2
-virtualenv-clone==0.2.6
-virtualenvwrapper==4.7.1
-virtualenvwrapper-win==1.2.1
+textstat
 xmltodict==0.10.1
