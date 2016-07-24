@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    {% block meta_tags %}
+      <meta charset='utf-8'>
+      <meta http-equiv="X-UA-Compatible" content="ID=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+    <title>
+      {% block title %}
+        MNDFUL
+      {% endblock %}
+    </title>
+    {% block stylesheets %}
+      <link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+      <link href="{% static 'css/bootstrap.min.css'%}" rel='stylesheet' type='text/css'>
+    {% endblock %}
+    {% block javascript %}
+
+      <!--[if lt IE 9]>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if (gte IE 9) | (!IE)]><!-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endblock %}
+    {% block extrahead %}{% endblock %}
+  </head>
+  <body>
+    {% block nav %}
+      {% include 'nav.html' %}
+    {% endblock %}
+    <div class='container'>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
