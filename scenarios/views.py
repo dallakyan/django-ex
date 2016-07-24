@@ -88,7 +88,7 @@ def add_income_projections_to_data(data, location, income):
     data['monthly_expenses'] = monthly_expenses
     data['average_monthly'] = average_monthly
     data['yearly_net_income'] = yearly_net_income
-    print data
+    print(data)
 
 
 @login_required

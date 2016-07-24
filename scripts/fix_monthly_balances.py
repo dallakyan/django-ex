@@ -20,7 +20,7 @@ import datetime
 def fix_monthly_balances():
     today = datetime.date.today()
     for month in Month.objects.all():
-        print month
+        print(month)
         prior_month = (month.year.year < today.year or
                 (month.year.year == today.year and month.month < today.month))
         budgeted_income = 0

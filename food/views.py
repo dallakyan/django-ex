@@ -285,7 +285,7 @@ class FoodItemQuantityWidget(widgets.MultiWidget):
     def value_from_datadict(self, data, files, name):
         # We can't call super here, 'cause we've totally messed with how the
         # results are returned.  This method is fairly complicated.
-        print data
+        print(data)
         foods = [x for x in data.getlist(name + '_0') if x]
         amounts = [x for x in data.getlist(name + '_1') if x]
         measures = [x for x in data.getlist(name + '_2') if x]
