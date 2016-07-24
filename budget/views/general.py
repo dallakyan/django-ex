@@ -206,7 +206,7 @@ def simple_form(request, form_class, next_url, label, header, instance=None):
         try:
             form.save()
         except ValueError:
-            print form.errors
+            print(form.errors)
             raise
         return HttpResponseRedirect(next_url)
     context = RequestContext(request)
