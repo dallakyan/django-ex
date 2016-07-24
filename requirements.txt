@@ -13,7 +13,7 @@ pbr==1.8.1
 Pillow==3.1.0
 simplejson==3.8.2
 six==1.10.0
-stevedore==1.10.0
-textblob==0.11.1
-textstat
-xmltodict==0.10.1
+stevedore
+textblob
+textstat3
+xmltodict
