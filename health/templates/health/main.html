@@ -1,0 +1,74 @@
+{% extends "health/base.html" %}
+
+{% block content %}
+<div class="go-to-chart">
+  <a href="{% url 'health-view-chart' %}">View as Chart</a>
+</div>
+<br>
+<div class="sleep">
+  <div class="add-sleep">
+    <a href="{% url 'health-add-sleep' %}">Add Sleep</a>
+  </div>
+  {% for slept in sleep %}
+  <div class="slept">
+    <span class="edit-sleep"><a href="{% url 'health-edit-sleep' slept.id %}">-</a></span>
+    <span class="sleep-start">{{ slept.start_time }}</span> -
+    <span class="sleep-end">{{ slept.end_time }}</span>
+    <span class="sleep-rested">
+      | Rested: {{ slept.how_rested }}
+      (woke up {{ slept.times_woke_up }} time{{ slept.times_woke_up|pluralize }})
+    </span>
+  </div>
+  {% endfor %}
+</div>
+<hr>
+<div class="symptoms">
+  <div class="add-symptom">
+    <a href="{% url 'health-add-symptom' %}">Add Symptom</a>
+  </div>
+  {% for symptom in symptoms %}
+  <div class="symptom">
+    <div class="symptom-name">{{ symptom.name }}</div>
+    <a href="{% url 'health-add-symptom-occurrence-w-id' symptom.id %}">Add Occurrence</a>
+    {% for occurrence in symptom.symptomoccurrence_set.all %}
+    <div class="occurrence">
+      <div class="occurrence-details">
+        <span class="edit-symptom-occurrence"><a href="{% url 'health-edit-symptom-occurrence' occurrence.id %}">-</a></span>
+        <span class="symptom-start">{{ occurrence.start_time }}</span> -
+        <span class="symptom-end">{{ occurrence.end_time }}</span>
+        <span class="symptom-severity">| Severity: {{ occurrence.severity }}</span>
+        <span class="symptom-note">| {{ occurrence.note }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+<hr>
+<div class="medicines">
+  <div class="add-medicine">
+    <a href="{% url 'health-add-medicine' %}">Add Medicine</a>
+  </div>
+  {% for medicine in medicines %}
+  <div class="medicine">
+    <div class="medicine-name">{{ medicine.name }}</div>
+    <a href="{% url 'health-add-medicine-taken-w-id' medicine.id %}">Add Dose</a>
+    {% for dose in medicine.medicinetaken_set.all %}
+    <div class="dose">
+      <div class="dose-details">
+        <span class="edit-medicine-dose"><a href="{% url 'health-edit-medicine-taken' dose.id %}">-</a></span>
+        <span class="medicine-time">{{ dose.time }}</span>
+        <span class="medicine-dose">| {{ dose.dose }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <br>
+  {% endfor %}
+</div>
+
+<br><br><br><br>
+Exercise
+Weight
+Other Event
+{% endblock %}

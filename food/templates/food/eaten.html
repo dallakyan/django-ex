@@ -1,0 +1,48 @@
+{% extends "food/base.html" %}
+
+{% block content %}
+<div class="all-food-eaten">
+  <div class="add-food-eaten">
+    <a href="{% url 'food-add-food-eaten' %}">Add Food Eaten</a>
+  </div>
+  {% for food in food_eaten %}
+  <div class="food-eaten">
+    <span class="edit-food-eaten"><a href="{% url 'food-edit-food-eaten' food.id %}">-</a></span>
+    <span class="time-food-eaten">{{ food.time }}</span>
+    <span class="what-food-eaten">
+      | {{ food.servings }} serving{{ food.servings|pluralize }} of
+      {{ food.food_item.name }}
+    </span>
+  </div>
+  {% endfor %}
+</div>
+<br>
+<div class="food-items">
+  Foods
+  <div class="add-food-item">
+    <a href="{% url 'food-add-food-item' %}">Add Food Item</a>
+  </div>
+  {% regroup food_items by get_item_type_display as item_type_list %}
+  {% for item_type in item_type_list %}
+  <div class="food-item-type">
+    {{ item_type.grouper }}
+    {% for food_item in item_type.list %}
+    <div class="food-item">
+      <a href="{% url 'food-edit-food-item' food_item.id %}">{{ food_item }}</a>
+      <span class="ingredients">{{ food_item.get_ingredients_list }}</span>
+      <div class="ratings">
+        Ratings: (<a href="{% url 'food-add-food-item-rating-with-food' food_item.id %}">add one</a>)
+        {% for rating in food_item.fooditemrating_set.all %}
+        <div class="rating">
+          <a href="{% url 'food-edit-food-item-rating' rating.id %}">{{ rating.get_person_display }}: {{ rating.rating }}</a>
+        </div>
+        {% endfor %}
+      </div>
+      <br>
+    </div>
+    {% endfor %}
+    <br>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

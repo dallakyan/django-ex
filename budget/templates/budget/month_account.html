@@ -1,0 +1,48 @@
+{% load humanize %}
+{% load budget_extras %}
+
+<a href="{% url 'budget-edit-account' account.id %}">{{ account.name }}</a>:
+  {{ account.balance }}
+<div class="transactions">
+  Transactions:
+  <table>
+    <tr>
+      {% for header in account.headers %}
+      <th class="{{ header.classname }}">{{ header.text }}</th>
+      {% endfor %}
+    </tr>
+    {% for transaction in account.transactions %}
+    <tr transaction-id="{{ transaction.id }}">
+      {% for item in transaction.items %}
+      <td class="{{ item.classname }}">
+        {% if forloop.counter == 1 %}
+        <div>{{ item.text }}</div>
+        {% endif %}
+        {% if forloop.counter == 2 %}
+        <div location-id="{{ transaction.location_id }}">{{ item.text }}</div>
+        {% endif %}
+        {% if forloop.counter == 3 %}
+        <div class="edit-transaction">
+          {% if transaction.id == -1 %}
+          {{ item.text }}
+          {% else %}
+          <a href="#">{{ item.text }}</a>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if forloop.counter > 3 %}
+          {% ifequal item.classname "pending" %}
+          <input type="checkbox" class="pending-checkbox" {% ifequal item.text "P" %} checked="checked" {% endifequal %}>
+          {% else %}
+            {{ item.text|intcomma }}
+          {% endifequal %}
+        {% endif %}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <div class="add-transaction">
+    <a href="#">Add transaction</a>
+  </div>
+</div>

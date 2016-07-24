@@ -1,0 +1,38 @@
+{% load multifor %}
+{% load humanize %}
+
+<table>
+  <col><col><col><col><col><col><col><col><col><col><col><col><col><col><col>
+  <tbody class="{{ expense_class }}">
+    {% for subcat in cat.subcategories %}
+    <tr class="subcategory" id="subcategory-{{ subcat.id }}" subcategory-id="{{ subcat.id }}" subcategory-name="{{ subcat.name }}">
+      {% if forloop.counter == 1 %}
+      <td rowspan="{{ cat.rowspan }}" class="cat-name">{{ cat.name }}</td>
+      {% endif %}
+      <td class="subcat-name">{{ subcat.name }}</td>
+      {% for month_balance in subcat.to_show; month_id in month_ids %}
+      {% if relative_year == "future" %}
+      <td class="editable edit_category_budget" month="{{ month_id }}">{{ month_balance|floatformat:"0"|intcomma }}</td>
+      {% elif relative_year == "past" %}
+      <td month="{{ month_id }}"><a href="#">
+          {{ month_balance|floatformat:"0"|intcomma }}
+      </a></td>
+      {% elif forloop.counter >= current_month %}
+      <td class="editable edit_category_budget" month="{{ month_id }}">{{ month_balance|floatformat:"0"|intcomma }}</td>
+      {% else %}
+      <td month="{{ month_id }}"><a href="#">
+          {{ month_balance|floatformat:"0"|intcomma }}
+      </a></td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    <tr class="category-total">
+      <td></td><td>Subtotal:</td>
+      {% for month_balance in cat.totals %}
+      <td>{{ month_balance|floatformat:"0"|intcomma }}</td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+

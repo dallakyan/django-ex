@@ -1,0 +1,191 @@
+/* Navigation menu */
+.ui-menu {
+    width: 10em;
+}
+ul.ui-widget {
+    font-size: small;
+}
+
+/* Health stuff (TODO: split into separate files */
+div.symptom {
+    margin-bottom: 1em;
+}
+div.add-symptom {
+    margin-bottom: 1em;
+}
+
+/* Transactions on the monthly page */
+.transactions th {
+    text-align: left;
+}
+.transactions th.dollar-amount {
+    text-align: right;
+}
+.transactions tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.dollar-amount {
+    text-align: right;
+}
+.transactions .date {
+    width: 6em;
+}
+.transactions .location {
+    width: 6.5em;
+}
+.transactions .dollar-amount {
+    width: 4.7em;
+}
+.transactions .note {
+    width: 37em;
+}
+.transactions .pending {
+    text-align: right;
+    width: 3em;
+}
+.transactions td div {
+    width: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#transaction-dialog {
+  text-align: left;
+  font-size: .65em;
+}
+
+/* Transactions on the subcategory page */
+#info-dialog {
+  all: initial;
+}
+#expenses td {
+    padding-right: 2em;
+}
+#expenses th {
+    text-align: left;
+}
+#expenses td.amount {
+    width: 3em;
+    text-align: right;
+}
+
+/* Budget bars for the monthly page */
+.category {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.overall {
+    font-weight: bold;
+    clear: both;
+    width: 85%;
+}
+.subcategory {
+    clear: both;
+    width: 85%;
+}
+.category-name {
+    float: left;
+    width: 13em;
+}
+.budget-bar {
+    position: relative;
+    float: left;
+    width: 60%;
+    margin-left: .5em;
+    margin-right: 2em;
+    background-color: gray;
+    z-index: -100;
+}
+.category-balance {
+    position: relative;
+    float: left;
+    text-align: left;
+    z-index: 100;
+}
+.remaining-balance {
+    position: relative;
+    float: right;
+    text-align: right;
+    z-index: 100;
+}
+.bar {
+    position: absolute;
+    float: left;
+    top: 0;
+    bottom: 0;
+    background-color: green;
+    min-height: 100%;
+    z-index: 0;
+}
+.over-budget {
+    background-color: red;
+}
+.category-budget {
+    float: left;
+}
+
+/* Table styling for the yearly page */
+#year table {
+    border-collapse: collapse;
+    margin-bottom: 2em;
+}
+#year table.month-headers {
+    text-align: center;
+    position: fixed;
+    top: 0;
+}
+#year tr.subcategory:nth-child(even) {
+    background-color: #dddddd;
+}
+#year td {
+    text-align: right;
+    border: 1px solid black;
+}
+#year table col {
+    width: 3.6em;
+}
+#year table col:first-child {
+    width: 10em;
+}
+#year table col:nth-child(2) {
+    width: 11em;
+}
+#year tr.category-total, tr.income-total, tr.expense-total, tr.investment-total, tr.mandatory-total {
+    font-weight: bold;
+}
+#year td.cat-name {
+    text-align: left;
+}
+#year td.subcat-name {
+    text-align: left;
+}
+.cat-name {
+    vertical-align: top;
+}
+#year .subcategory td a {
+    text-decoration: none;
+    color: #000000;
+}
+
+/* Table style for the food calendar */
+#food-calendar table {
+    border-collapse: collapse;
+    margin-top: 1em;
+    text-align: center;
+}
+#food-calendar th {
+    width: 9em;
+    border: 1px solid black;
+}
+#food-calendar td {
+    width: 9em;
+    border: 1px solid black;
+    font-size: .8em;
+}
+#food-calendar td select {
+    font-size: .8em;
+}
+#food-calendar td.date {
+    width: 5em;
+    font-size: 1em;
+}

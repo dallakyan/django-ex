@@ -1,0 +1,32 @@
+{% extends "budget/base.html" %}
+
+{% block content %}
+
+<a href="{% url 'budget-edit-location' location_id %}">{{ name }}</a>
+
+<div id="total_balance">
+  Total spent: {{ total_spent }}
+</div>
+<div id="expenses">
+  <hr>
+  Transactions
+  <br>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Account</th>
+      <th>Amount</th>
+      <th>Description</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.account }}</td>
+      <td class="amount">{{ transaction.amount }}</td>
+      <td>{{ transaction.description }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

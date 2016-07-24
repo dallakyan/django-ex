@@ -1,59 +1,118 @@
-import datetime
 from django.db import models
-from django.utils import timezone
-#from django.core.validators import MinValueValidator, MaxValueValidator
-from django import forms
 
-# Create your models here.
+class Symptom(models.Model):
+    name = models.CharField(max_length=256)
 
-class Person(models.Model):
-  person_id = models.AutoField(primary_key=True)
+    def __unicode__(self):
+        return self.name
 
-  name = models.CharField(max_length=200, default='')
-  phone_number = models.IntegerField()
-
-  contact_name = models.CharField(max_length=200, default='')
-  contact_number = models.IntegerField(default=-1)
-
-  def __str__(self):
-    return self.name
-
-class Mood(models.Model):
-  mood_id = models.AutoField(primary_key=True)
-  name = models.CharField(max_length=50, default='')
-  happiness = models.IntegerField()
-
-  def __str__(self):
-    return str(self.happiness) + ': ' + self.name
-
-class Weather(models.Model):
-  weather_id = models.AutoField(primary_key=True)
-  temperature = models.IntegerField()
-  weather = models.CharField(max_length=200)
-
-  def __str__(self):
-    return self.weather + ' ' + str(self.temperature)
+    class Meta:
+        ordering = ['name']
 
 
-class Day(models.Model):
-  date_id = models.AutoField(primary_key=True)
-  date = models.DateTimeField(default=timezone.now())
- 
-  mood_id = models.ForeignKey(Mood)
-  weather_id = models.ForeignKey(Weather, default=-1)
+class SymptomOccurrence(models.Model):
+    symptom = models.ForeignKey('Symptom')
+    CHOICES = zip(range(1, 11), range(1, 11))
+    severity = models.IntegerField(choices=CHOICES)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    note = models.TextField(blank=True)
 
-  def __str__(self):
-    return str(self.date)
+    def __unicode__(self):
+        return self.symptom.name
 
-class Person2Day(models.Model):
-  person_id = models.ForeignKey(Person)
-  date = models.IntegerField()
+    class Meta:
+        ordering = ['-end_time']
 
-  date_id = models.ForeignKey(Day)
 
-  def __str__(self):
-    return str(person_id) + ': ' + str(date)
+class Medicine(models.Model):
+    name = models.CharField(max_length=256)
 
-class MoodForm(forms.Form):
-  mood_id = forms.IntegerField(('Mood'), required=True)
+    def __unicode__(self):
+        return self.name
 
+    class Meta:
+        ordering = ['name']
+
+
+class MedicineTaken(models.Model):
+    medicine = models.ForeignKey('Medicine')
+    dose = models.ForeignKey('food.Quantity')
+    time = models.DateTimeField()
+
+    def __unicode__(self):
+        return self.medicine.name + ' at ' + str(self.time)
+
+    class Meta:
+        ordering = ['-time']
+
+
+class Weight(models.Model):
+    pounds = models.FloatField()
+    time = models.DateTimeField()
+
+    def __unicode__(self):
+        return self.pounds
+
+    class Meta:
+        ordering = ['-time']
+
+
+class Sleep(models.Model):
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    CHOICES = zip(range(1, 11), range(1, 11))
+    how_rested = models.IntegerField(choices=CHOICES)
+    times_woke_up = models.IntegerField(default=0)
+    with_bed_wedge = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return str(self.start_time)
+
+    class Meta:
+        ordering = ['-end_time']
+
+
+class ExerciseActivity(models.Model):
+    name = models.CharField(max_length=256)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class Exercise(models.Model):
+    activity = models.ForeignKey('ExerciseActivity')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    def __unicode__(self):
+        return self.activity.name
+
+    class Meta:
+        ordering = ['-end_time']
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=256)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class EventOccurrence(models.Model):
+    event = models.ForeignKey('Event')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    info = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.event.name
+
+    class Meta:
+        ordering = ['-end_time']

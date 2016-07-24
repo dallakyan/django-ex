@@ -1,0 +1,93 @@
+{% extends "health/base.html" %}
+
+{% block content %}
+<br><br>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+var earliestDate = Date.UTC(2000, 1, 1);
+var latestDate = Date.UTC(3000, 1, 1);
+var hourMillis = 60 * 60 * 1000;
+var dayMillis = hourMillis * 24;
+
+var now = {{ now|date:"U" }} * 1000 - hourMillis * 4;
+var yesterday = now - dayMillis;
+
+var series = [];
+var sleep = {};
+series.push(sleep);
+sleep.type = 'area';
+sleep.name = 'Sleep';
+sleep.data = new Array();
+{% for slept in sleep reversed %}
+sleep.data.push({
+    x: {{ slept.start_time|date:"U" }} * 1000 - hourMillis * 4,
+    y: {{ slept.how_rested }},
+    name: {{ slept.how_rested }}
+    });
+sleep.data.push({
+    x: {{ slept.end_time|date:"U" }} * 1000 - hourMillis * 4,
+    y: {{ slept.how_rested }},
+    name: {{ slept.how_rested }}
+    });
+sleep.data.push({
+    x: {{ slept.end_time|date:"U" }} * 1000 + 1 - hourMillis * 4,
+    y: null
+    });
+{% endfor %}
+
+var symptomSeries;
+{% for symptom in symptoms %}
+symptomSeries = {};
+symptomSeries.type = 'area';
+symptomSeries.name = '{{ symptom.name }}';
+symptomSeries.data = new Array();
+{% for occurrence in symptom.symptomoccurrence_set.all reversed %}
+symptomSeries.data.push({
+    x: {{ occurrence.start_time|date:"U" }} * 1000 - hourMillis * 4,
+    y: {{ occurrence.severity }},
+    name: {{ occurrence.severity }}
+    });
+symptomSeries.data.push({
+    x: {{ occurrence.end_time|date:"U" }} * 1000 - hourMillis * 4,
+    y: {{ occurrence.severity }},
+    name: {{ occurrence.severity }}
+    });
+symptomSeries.data.push({
+    x: {{ occurrence.end_time|date:"U" }} * 1000 + 1 - hourMillis * 4,
+    y: null
+    });
+{% endfor %}
+series.push(symptomSeries);
+{% endfor %}
+
+var medicineSeries;
+{% for medicine in medicines %}
+medicineSeries = {};
+medicineSeries.type = 'area';
+medicineSeries.name = '{{ medicine.name }}';
+medicineSeries.data = new Array();
+{% for dose in medicine.medicinetaken_set.all reversed %}
+medicineSeries.data.push({
+    x: {{ dose.time|date:"U" }} * 1000 - hourMillis * 4,
+    y: 10,
+    name: "{{ medicine.name }}: {{ dose.dose }}",
+    });
+medicineSeries.data.push({
+    x: ({{ dose.time|date:"U" }} + 300) * 1000 - hourMillis * 4,
+    y: 10,
+    name: "{{ medicine.name }}: {{ dose.dose }}",
+    });
+medicineSeries.data.push({
+    x: ({{ dose.time|date:"U" }} + 300) * 1000 + 1 - hourMillis * 4,
+    y: null,
+    });
+{% endfor %}
+series.push(medicineSeries);
+{% endfor %}
+</script>
+<script type="text/javascript" src="/static/js/highcharts.js"></script>
+<script type="text/javascript" src="/static/js/health_chart.js"></script>
+{% endblock %}
+
