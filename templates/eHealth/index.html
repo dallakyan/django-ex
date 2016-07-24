@@ -1,0 +1,65 @@
+{% extends "eHealth/base.html" %}
+
+{% load staticfiles %}
+
+{% block otherSources %}   
+<script src="{{ STATIC_URL }}index_jQuery_func.js"></script>
+{% endblock %}
+
+{% block body_block %}
+
+            <div class="searching col-md-7">
+                <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+
+                <div class="input-group">
+                            <input id="query" name="query" type="text" class="form-control input-lg" placeholder="Search..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-lg" type="submit">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                </div>
+
+                </form>
+                <div id="popular">
+                    {% if popular_pages %}
+                        <h3 class="title1">Most Popular Public Articles</h3>
+                        <ul class="list-group">
+                            {% for page in popular_pages %}
+                             <li><a class="openNewWindow" id="{{page.pk}}" href="{{page.linkURL}}">{{ page.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <strong>There are no pages present.</strong>
+                    {% endif %}
+                </div>
+
+                <!--<div id="shared">
+                    {% if shared_pages %}
+                        <h3 class="title1">Other Shared Articles</h3>
+                        <ul class="list-group">
+                            {% for page in shared_pages %}
+                             <li><a  class="openNewWindow" id="{{page.pk}}" href="{{page.linkURL}}">{{ page.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <strong>There are not enough articles present.</strong>
+                    {% endif %}
+                </div>-->
+
+
+            </div>
+
+
+
+
+
+        <div class="login col-md-5">
+
+            {% include 'registration/login.html' %}
+        </div>
+
+
+
+{% endblock %}

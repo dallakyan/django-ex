@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:background-image="http://www.w3.org/1999/xhtml">
+    <head>
+
+        <title>eHealthCare</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheet.css" />
+
+        <script src="{{ STATIC_URL }}js/js-scripts.js"></script>
+
+        {% block otherSources %}{% endblock %}
+
+
+
+    </head>
+
+  <body>
+
+
+
+
+    <div class="navbar navbar-fixed-top" role="navigation">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+                <div class="navbar-header">
+                    <h1>e-HealthCaring</h1>
+                </div>
+            <div class="tabs">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'search' %}">QuerySearch</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="/eHealth/user">My Profile</a></li>
+                    <li><a href="{% url 'auth_logout' %}?next=/eHealth/">Logout</a></li>
+                    {% elif not user.is_authenticated %}
+                    <li><a href="{% url 'registration_register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class = "col-md-12 main">
+                        {% block body_block %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    </div>
+  </body>
+
+
+</html>

@@ -1,0 +1,19 @@
+  
+
+
+
+
+<form id="log-form" class="form-signing" role="form" method="post" action="/accounts/login/?next=/eHealth/">
+    {% if user.is_authenticated %}
+    {% else %}
+    {% csrf_token %}
+
+    <br />
+
+    <h3 class="form-signin-heading">Please login</h3>
+    <input type="text" class="form-control" name="username" placeholder="Username" id="id_username" required="" />
+    <input type="password" class="form-control" name="password" placeholder="Password" id="id_password" required=""/>
+    <label class="checkbox"><input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me</label>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Login</button>
+    {% endif %}
+</form>

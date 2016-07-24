@@ -1,0 +1,187 @@
+{% extends "eHealth/base.html" %}
+
+{% load staticfiles %}
+
+{% block otherSources %}
+
+<script src="{{ STATIC_URL }}searching_jQuery_func.js"></script>
+
+
+<link rel="stylesheet" href="{{ STATIC_URL }}jquery.alerts.css">
+<script src="{{ STATIC_URL }}jquery.alerts.js"></script>
+
+
+{% endblock %}
+
+
+{% block body_block %}
+
+        <div class="searching col-md-5" id="query_2">
+
+            <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input  id="query" name="query" type="text" class="form-control input-lg" placeholder="Search..." />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                  
+
+                </div>
+                <div id="adding_suggestion">                  </div>
+            </form>
+
+            <!--<div id="slider-subj">
+                <input class="bar" type="range" id="rangeinput" value="10" onchange="rangevalue.value=value"/>
+	            <span class="highlight"></span>
+            </div>
+
+            <div id="slider-polarity">
+                <input class="bar" type="range" id="rangeinput2" value="10" onchange="rangevalue.value=value"/>
+	            <span class="highlight"></span>
+            </div>
+
+            <div id="slider-readability">
+                <input class="bar" type="range" id="rangeinput3" value="10" onchange="rangevalue.value=value"/>
+	            <span class="highlight"></span>
+            </div>-->
+
+
+        </div>
+
+
+
+        <div class="col-md-7">
+
+            <div class="result_engines">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#all_results">Mashup</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a data-toggle="tab" href="#bing">Bing Engine</a></li>
+                        <li><a data-toggle="tab" href="#med">MedLine Engine</a></li>
+                        <li><a data-toggle="tab" href="#health">HealthFinder Engine</a></li>
+                        {% endif %}
+                    </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+
+                    <div class="tab-pane" id="bing">
+                        {% if bing_list %}
+                        <h4>
+                            <ol>
+                                {% for result in bing_list %}
+                                <li>
+                                    <a style="text-decoration: none" class="hover_element openNewWindow " href="{{ result.url }}">
+                                        {{ result.title }}
+                                        <div class="pop-up">
+
+                                            <br />
+                                            <h5>{{ result.summary }}</h5>
+                                            <h5 id="bingSubj">Subjectivity: {{ result.subj }}</h5>
+                                            <h5 id="bingPola">Polarity: {{ result.pola }}</h5>
+                                            <h5 id="bingreada">Readability: {{ result.reada }}</h5>
+
+
+
+                                        </div>
+                                    </a>
+
+                                    <button class="btn btn-primary dropdown-toggle mybtn savePage" id="{{ result.url }}" type="button" data-toggle="dropdown" data-content="Some content in the popover">
+                                        SaveTo
+                                    </button>
+                                </li>
+                                {% endfor %}
+
+                            </ol>
+                        </h4>
+                        {% endif %}
+                    </div>
+
+                    <div class="tab-pane" id="med">
+                        {% if med %}
+                        <h4>
+                            <ol>
+                                {% for result in med %}
+                                <li><a style="text-decoration: none" class="hover_element openNewWindow" href="{{ result.url }}">{{ result.title }}
+                                <div class="pop-up">
+                                        <br/>
+                                        <h5>{{ result.summary }}</h5>
+                                        <h5 id ="bingSubj">Subjectivity: {{ result.subj }}</h5>
+                                        <h5 id="bingPola">Polarity: {{ result.pola }}</h5>
+                                        <h5 id="bingreada">Readability: {{ result.reada }}</h5>
+                                    </div>
+
+                                </a>
+                                    <button class="btn btn-primary dropdown-toggle mybtn savePage" id="{{ result.url }}" type="button" data-toggle="dropdown" data-content="Some content in the popover">SaveTo
+                                    </button>
+                                       
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </h4>
+                        {% endif %}
+                    </div>
+
+                    <div class="tab-pane" id="health">
+                        {% if health %}
+                        <h4>
+                            <ol>
+                                {% for result in health %}
+                                <li><a style="text-decoration: none" class="hover_element openNewWindow" href="{{ result.url }}">{{ result.title }}
+                                <div class="pop-up">
+                                        <br/>
+                                        <h5>{{ result.summary }}</h5>
+                                        <h5 id ="bingSubj">Subjectivity: {{ result.subj }}</h5>
+                                        <h5 id="bingPola">Polarity: {{ result.pola }}</h5>
+                                        <h5 id="bingreada">Readability: {{ result.reada }}</h5>
+                                    </div>
+                                </a>
+                                <button class="btn btn-primary dropdown-toggle mybtn savePage" id="{{ result.url }}" type="button" data-toggle="dropdown" data-content="Some content in the popover">SaveTo
+                                   </button>
+                                        </li>
+                                {% endfor %}
+                            </ol>
+                        </h4>
+                        {% endif %}
+                    </div>
+
+                    <div class="tab-pane active" id="all_results">
+                        {% if all_results %}
+                        <h4>
+                            <ol>
+                                {% for result in all_results %}
+                                <li><a style="text-decoration: none" class="hover_element openNewWindow" href="{{ result.url }}">{{ result.title }}
+                                <div class="pop-up">
+                                        <h5>{{ result.summary }}</h5>
+                                        <h5 id ="bingSubj">Subjectivity: {{ result.subj }}</h5>
+                                        <h5 id="bingPola">Polarity: {{ result.pola }}</h5>
+                                        <h5 id="bingreada">Readability: {{ result.reada }}</h5>
+                                    </div>
+                                </a>{% if user.is_authenticated %}
+                                    <button class="btn btn-primary dropdown-toggle mybtn savePage" id="{{ result.url }}" type="button" data-toggle="dropdown" data-content="Some content in the popover">SaveTo
+                                    </button>
+                                    
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+{% endblock %}
+
+
+
+
