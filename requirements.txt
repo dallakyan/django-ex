@@ -15,5 +15,4 @@ simplejson==3.8.2
 six==1.10.0
 stevedore
 textblob
-textstat3
 xmltodict
