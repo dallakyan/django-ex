@@ -268,8 +268,8 @@ class FoodItemQuantityWidget(widgets.MultiWidget):
         self.widgets[0].choices = choices
         divs = []
         for v in values:
-            print 'In loop'
-            print v
+            print('In loop')
+            print(v)
             div = '<div>'
             sub_v = self.decompress(v)
             for i, widget in enumerate(self.widgets):
