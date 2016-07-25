@@ -8,7 +8,7 @@ Local settings
 - Add django-extensions as app
 '''
 
-from .common import env  # noqa
+from .common import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------
