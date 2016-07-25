@@ -1,0 +1,18 @@
+<a href="{% url 'index' %}">View all visits</a>
+<h1>Visit #{{ visit.id }}</h1>
+<p><a href="{% url 'edit' visit.id %}">Edit this visit</a></p>
+<label>Date: {{ visit.date|date }}</label><br/>
+<label>
+    Provider{{ visit.provider_set.count|pluralize }}:
+    {% for p in visit.provider_set.all %}
+    {{ p }}{% if visit.provider_set.count > 1 %}, {% endif %}
+    {% endfor %}
+</label><br/>
+
+<label>Location: {{ visit.location }}</label><br/><br/>
+
+Notes: <p>{{ visit.notes }}</p>
+
+{% for image in visit.get_images %}
+<img src="{{ image.url }}"/>
+{% endfor %}

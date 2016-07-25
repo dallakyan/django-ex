@@ -1,0 +1,22 @@
+<section>
+    <h1>Add New Provider</h1>
+
+    <form  method="post">{% csrf_token %}
+        <table>
+            {{ p_form.as_table }}
+        </table>
+        <input type="submit" name="pform-submit" value="Submit">
+    </form>
+</section>
+
+<section>
+    <h1>Add New Visit</h1>
+
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+        <table>
+            {{ v_form.as_table }}
+            {{ i_form.as_table }}
+        </table>
+        <input type="submit" name="vform-submit" value="Submit">
+    </form>
+</section>

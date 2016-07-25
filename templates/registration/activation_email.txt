@@ -1,0 +1,2 @@
+Click {{ activation_key }} to activate your account on {{ site.name }}.
+The activation key will be valid for up to {{ expiration_days }} days.

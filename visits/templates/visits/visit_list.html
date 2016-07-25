@@ -1,0 +1,26 @@
+<h2>Visits</h2>
+<ul>
+    {% for visit in visit_list %}
+    <li><a href="{% url 'detail' visit.id %}">Visit #{{visit.id}}</a></li>
+    <ul>
+        <li>Provider{{ visit.provider_set.count|pluralize }}:
+            {% for p in visit.provider_set.all %}
+            {{ p }}{% if visit.provider_set.count > 1 %}, {% endif %}
+            {% endfor %}
+        </li>
+        <li>{{ visit.date }}</li>
+        {% if visit.location %}
+        <li>{{ visit.location }}</li>
+        {% endif %}
+        <li>{{ visit.notes }}</li>
+    </ul>
+</li>
+{% endfor %}
+</ul>
+
+<h2>Providers</h2>
+<ul>
+    {% for p in providers %}
+    <li>{{ p }}</li>
+    {% endfor %}
+</ul>
